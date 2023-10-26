@@ -3,6 +3,25 @@ import 'package:intl/intl.dart';
 
 enum CARDTYPE { VISA, MASTERCARD }
 
+class CardData {
+  String creditCardNumber;
+  double balance;
+  String expiresDate;
+  CARDTYPE cardType = CARDTYPE.VISA;
+  Color cardColor;
+  Color primaryTextColor;
+  Color secondaryTextColor;
+  CardData({
+    required this.creditCardNumber,
+    this.balance = 0,
+    required this.expiresDate,
+    this.cardType = CARDTYPE.VISA,
+    this.cardColor = const Color(0xFF1c1c1c),
+    this.primaryTextColor = Colors.white,
+    this.secondaryTextColor = const Color(0xFF6a6a6a),
+  });
+}
+
 class CreditCard extends StatelessWidget {
   final String creditCardNumber;
   final double balance;
@@ -28,12 +47,12 @@ class CreditCard extends StatelessWidget {
       case CARDTYPE.VISA:
         return Image.asset(
           "assets/logo/visa.png",
-          height: 25,
+          height: 20,
         );
       case CARDTYPE.MASTERCARD:
         return Image.asset(
           "assets/logo/mastercard.png",
-          height: 25,
+          height: 20,
         );
     }
   }
@@ -61,7 +80,7 @@ class CreditCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 25,
+            height: 20,
             alignment: Alignment.centerRight,
             child: cardTypeImage(),
           ),
