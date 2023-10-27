@@ -18,21 +18,16 @@ class _AnalysisChartState extends State<AnalysisChart> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: 1.70,
-          child: Padding(
-            padding: const EdgeInsets.only(
-              right: 18,
-              left: 12,
-              top: 24,
-              bottom: 12,
-            ),
-            child: LineChart(mainData()),
-          ),
+    return SizedBox(
+      width: double.infinity,
+      height: 180,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          right: 18,
+          left: 12,
         ),
-      ],
+        child: LineChart(mainData()),
+      ),
     );
   }
 
@@ -44,18 +39,18 @@ class _AnalysisChartState extends State<AnalysisChart> {
       lineTouchData: const LineTouchData(enabled: false),
       minX: 0,
       maxX: 11,
-      minY: 0,
-      maxY: 6,
+      minY: 0.5,
+      maxY: 5,
       lineBarsData: [
         LineChartBarData(
           spots: const [
-            FlSpot(0, 3),
-            FlSpot(2.6, 2),
-            FlSpot(4.9, 5),
-            FlSpot(6.8, 3.1),
-            FlSpot(8, 4),
-            FlSpot(9.5, 3),
-            FlSpot(11, 4),
+            FlSpot(0, 2),
+            FlSpot(2.6, 1),
+            FlSpot(4.9, 4),
+            FlSpot(6.8, 2.1),
+            FlSpot(8, 3),
+            FlSpot(9.5, 2),
+            FlSpot(11, 3),
           ],
           isCurved: true,
           gradient: LinearGradient(colors: gradientColors),
