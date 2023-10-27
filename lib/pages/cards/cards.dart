@@ -4,6 +4,7 @@ import 'package:payment_app/pages/cards/transactionBottomSheet.dart';
 import 'package:payment_app/widgets/creditCard/creditCard.dart';
 import 'package:payment_app/widgets/myAppBar/myAppBar.dart';
 import 'package:payment_app/widgets/navgatorBar/navgatorBar.dart';
+import 'package:payment_app/widgets/transaction/transactionItem.dart';
 
 class Cards extends StatefulWidget {
   const Cards({Key? key}) : super(key: key);
@@ -33,6 +34,58 @@ class _CardsState extends State<Cards> {
       secondaryTextColor: Colors.white,
     ),
   ];
+  List<TransactionItemData> transactions = [
+    TransactionItemData(
+      title: "Apple Store",
+      amount: 100000,
+      status: STATUS.payment,
+      image: Container(
+        padding: const EdgeInsets.all(16),
+        child: Image.network(
+          "https://help.apple.com/assets/6491EB2FBC8EFD312D732C43/6491EB31BC8EFD312D732C4B/zh_TW/cfef5ce601689564e0a39b4773f20815.png",
+          height: 40,
+          width: 40,
+          color: Colors.white,
+        ),
+      ),
+    ),
+    TransactionItemData(
+      title: "Sydney",
+      amount: 130,
+      status: STATUS.received,
+      image: Image.network(
+        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MXw3NjA4Mjc3NHx8ZW58MHx8fHx8",
+        height: 64,
+        width: 64,
+      ),
+    ),
+    TransactionItemData(
+      title: "Google Play",
+      amount: 1300,
+      status: STATUS.payment,
+      image: Container(
+        padding: const EdgeInsets.all(16),
+        child: Image.network(
+          "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Logo_Play_512px_clr_nGVTgYY.width-500.format-webp.webp",
+          height: 40,
+          width: 40,
+        ),
+      ),
+    ),
+    TransactionItemData(
+      title: "Google Play",
+      amount: 1300,
+      status: STATUS.payment,
+      image: Container(
+        padding: const EdgeInsets.all(16),
+        child: Image.network(
+          "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Logo_Play_512px_clr_nGVTgYY.width-500.format-webp.webp",
+          height: 40,
+          width: 40,
+        ),
+      ),
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +98,9 @@ class _CardsState extends State<Cards> {
             padding: const EdgeInsets.only(top: 70),
             child: CardsCarousel(cardData: cardData),
           ),
-          const TransactionBottomSheet(),
+          TransactionBottomSheet(
+            transactions: transactions,
+          ),
         ],
       ),
     );
