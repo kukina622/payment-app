@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:payment_app/pages/cards/cards.dart';
 import 'package:payment_app/pages/home/home.dart';
 
 void main() {
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const Home(),
+        '/cards': (context) => const Cards(),
       },
     );
   }
