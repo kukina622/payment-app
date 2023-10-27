@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:payment_app/pages/cards/cardsCarousel.dart';
 import 'package:payment_app/pages/cards/transactionBottomSheet.dart';
 import 'package:payment_app/widgets/creditCard/creditCard.dart';
 import 'package:payment_app/widgets/myAppBar/myAppBar.dart';
+import 'package:payment_app/widgets/myBottomNavigationBar/myBottomNavigationBar.dart';
 import 'package:payment_app/widgets/myNavigationBar/myNavigationBar.dart';
 import 'package:payment_app/pages/cards/transactionItem.dart';
 
@@ -84,6 +87,61 @@ class _CardsState extends State<Cards> {
     )
   ];
 
+  bool isShowBottomNavigationBar = true;
+
+  late Function showBottomNavigationBar;
+  late Function noShowBottomNavigationBar;
+  List<Timer> timers = [];
+
+  Function debounce(Function fn, Duration duration) {
+    Timer? t;
+    return () {
+      t?.cancel();
+      t = Timer(duration, () {
+        fn.call();
+      });
+      timers.add(t!);
+    };
+  }
+
+  Function throttle(Function fn, Duration duration) {
+    Timer? t;
+    return () {
+      if (t != null) return;
+      t = Timer(duration, () {
+        fn.call();
+        t = null;
+      });
+      timers.add(t!);
+    };
+  }
+
+  @override
+  void initState() {
+    showBottomNavigationBar = debounce(
+      () => setState(() => isShowBottomNavigationBar = true),
+      const Duration(milliseconds: 800),
+    );
+    noShowBottomNavigationBar = throttle(
+      () => setState(() => isShowBottomNavigationBar = false),
+      const Duration(milliseconds: 50),
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Timer(const Duration(seconds: 2), () {
+        setState(() => isShowBottomNavigationBar = false);
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    for (var timer in timers) {
+      timer.cancel();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,9 +155,24 @@ class _CardsState extends State<Cards> {
           ),
           TransactionBottomSheet(
             transactions: transactions,
+            onScrollNotification: (scrollNotification) {
+              if (scrollNotification is ScrollStartNotification) {
+                noShowBottomNavigationBar();
+              } else if (scrollNotification is ScrollUpdateNotification) {
+                noShowBottomNavigationBar();
+              } else if (scrollNotification is ScrollEndNotification) {
+                showBottomNavigationBar();
+              }
+            },
           ),
         ],
       ),
+      floatingActionButton: AnimatedOpacity(
+        opacity: isShowBottomNavigationBar ? 1 : 0,
+        duration: const Duration(milliseconds: 500),
+        child: const MyBottomNavigationBar(initIndex: 1),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

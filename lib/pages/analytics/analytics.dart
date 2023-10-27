@@ -48,7 +48,7 @@ class _AnalyticsState extends State<Analytics> with TickerProviderStateMixin {
     return Scaffold(
       appBar: const MyAppBar(),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.only(right: 16, left: 16, bottom: 75),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -95,7 +95,7 @@ class _AnalyticsState extends State<Analytics> with TickerProviderStateMixin {
           ),
         ),
       ),
-      floatingActionButton: const MyBottomNavigationBar(),
+      floatingActionButton: const MyBottomNavigationBar(initIndex: 2),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

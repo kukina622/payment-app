@@ -3,9 +3,12 @@ import 'package:payment_app/pages/cards/transactionItem.dart';
 
 class TransactionBottomSheet extends StatefulWidget {
   final List<TransactionItemData> transactions;
+  final Function(ScrollNotification)? onScrollNotification;
+
   const TransactionBottomSheet({
     Key? key,
     this.transactions = const [],
+    this.onScrollNotification,
   }) : super(key: key);
 
   @override
@@ -44,47 +47,53 @@ class _TransactionBottomSheetState extends State<TransactionBottomSheet> {
                 padding: const EdgeInsets.only(left: 25, right: 25),
                 height: MediaQuery.of(context).size.height * 0.9,
                 width: MediaQuery.of(context).size.width,
-                child: SingleChildScrollView(
-                  controller: scrollController,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 45,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Transactions",
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (scrollNotification) {
+                    widget.onScrollNotification?.call(scrollNotification);
+                    return true;
+                  },
+                  child: SingleChildScrollView(
+                    controller: scrollController,
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 45,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Transactions",
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          RichText(
-                            text: const TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: "Recent",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                                WidgetSpan(
-                                  child: Icon(
-                                    Icons.keyboard_arrow_down,
-                                    size: 18,
-                                    weight: 700,
+                            RichText(
+                              text: const TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "Recent",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
                                   ),
-                                ),
-                              ],
+                                  WidgetSpan(
+                                    child: Icon(
+                                      Icons.keyboard_arrow_down,
+                                      size: 18,
+                                      weight: 700,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      ...widget.transactions.map((e) => TransactionItem(data: e)).toList(),
-                    ],
+                          ],
+                        ),
+                        ...widget.transactions.map((e) => TransactionItem(data: e)).toList(),
+                      ],
+                    ),
                   ),
                 ),
               ),

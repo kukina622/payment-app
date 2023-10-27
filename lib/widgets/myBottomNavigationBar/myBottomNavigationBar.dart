@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:payment_app/pages/analytics/analytics.dart';
+import 'package:payment_app/pages/cards/cards.dart';
 
 class MyBottomNavigationBar extends StatefulWidget {
-  const MyBottomNavigationBar({Key? key}) : super(key: key);
+  final int initIndex;
+  const MyBottomNavigationBar({Key? key, this.initIndex = 0}) : super(key: key);
 
   @override
   State<MyBottomNavigationBar> createState() => _MyBottomNavigationBarState();
@@ -16,6 +19,19 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
     Icons.signal_cellular_alt,
     Icons.person,
   ];
+
+  List<String> pages = [
+    "/",
+    "/cards",
+    "/analytics",
+    "/",
+  ];
+
+  @override
+  void initState() {
+    current = widget.initIndex;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +50,10 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         children: List.generate(
           icon.length,
           (index) => GestureDetector(
-            onTap: () => setState(() => current = index),
+            onTap: () {
+              String page = pages[index];
+              Navigator.pushReplacementNamed(context, page);
+            },
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(

@@ -22,8 +22,7 @@ class Home extends StatelessWidget {
                   borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color.fromARGB(255, 223, 221, 221)
-                          .withOpacity(0.5),
+                      color: const Color.fromARGB(255, 223, 221, 221).withOpacity(0.5),
                       spreadRadius: 2,
                       blurRadius: 5,
                       offset: const Offset(0, 1),
@@ -72,7 +71,7 @@ class Home extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () => Navigator.pushReplacementNamed(context, '/cards'),
               child: const Text(
                 "Get started",
                 style: TextStyle(fontSize: 20, color: Colors.white),
