@@ -3,8 +3,10 @@ import 'package:payment_app/pages/cards/transactionItem.dart';
 
 class TransactionBottomSheet extends StatefulWidget {
   final List<TransactionItemData> transactions;
-  const TransactionBottomSheet({Key? key, this.transactions = const []})
-      : super(key: key);
+  const TransactionBottomSheet({
+    Key? key,
+    this.transactions = const [],
+  }) : super(key: key);
 
   @override
   State<TransactionBottomSheet> createState() => _TransactionBottomSheetState();
@@ -31,7 +33,7 @@ class _TransactionBottomSheetState extends State<TransactionBottomSheet> {
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 5,
                 blurRadius: 7,
-                offset: const Offset(0, 3), // changes position of shadow
+                offset: const Offset(0, 3),
               ),
             ],
             color: Colors.white,
@@ -81,9 +83,7 @@ class _TransactionBottomSheetState extends State<TransactionBottomSheet> {
                           ),
                         ],
                       ),
-                      ...widget.transactions
-                          .map((e) => TransactionItem(data: e))
-                          .toList(),
+                      ...widget.transactions.map((e) => TransactionItem(data: e)).toList(),
                     ],
                   ),
                 ),
