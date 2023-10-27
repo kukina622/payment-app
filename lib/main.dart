@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:payment_app/pages/analytics/analytics.dart';
 import 'package:payment_app/pages/cards/cards.dart';
 import 'package:payment_app/pages/home/home.dart';
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Simply.',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const Home(),
         '/cards': (context) => const Cards(),
+        '/analytics': (context) => const Analytics(),
       },
     );
   }
