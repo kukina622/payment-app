@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:payment_app/pages/analytics/analytics.dart';
-import 'package:payment_app/pages/cards/cards.dart';
 
 class MyBottomNavigationBar extends StatefulWidget {
   final int initIndex;
