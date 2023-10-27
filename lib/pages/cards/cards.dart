@@ -3,7 +3,7 @@ import 'package:payment_app/pages/cards/cardsCarousel.dart';
 import 'package:payment_app/pages/cards/transactionBottomSheet.dart';
 import 'package:payment_app/widgets/creditCard/creditCard.dart';
 import 'package:payment_app/widgets/myAppBar/myAppBar.dart';
-import 'package:payment_app/widgets/navgatorBar/navgatorBar.dart';
+import 'package:payment_app/widgets/myNavigationBar/myNavigationBar.dart';
 import 'package:payment_app/pages/cards/transactionItem.dart';
 
 class Cards extends StatefulWidget {
@@ -90,7 +90,7 @@ class _CardsState extends State<Cards> {
       appBar: const MyAppBar(),
       body: Stack(
         children: [
-          const NavgatorBar(title: "Cards"),
+          const MyNavigationBar(title: "Cards"),
           Padding(
             padding: const EdgeInsets.only(top: 70),
             child: CardsCarousel(cardData: cardData),

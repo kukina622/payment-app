@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class NavgatorBar extends StatelessWidget {
+class MyNavigationBar extends StatelessWidget {
   final String title;
-  const NavgatorBar({Key? key, required this.title}) : super(key: key);
+  const MyNavigationBar({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
