@@ -4,7 +4,7 @@ import 'package:payment_app/pages/cards/transactionBottomSheet.dart';
 import 'package:payment_app/widgets/creditCard/creditCard.dart';
 import 'package:payment_app/widgets/myAppBar/myAppBar.dart';
 import 'package:payment_app/widgets/navgatorBar/navgatorBar.dart';
-import 'package:payment_app/widgets/transaction/transactionItem.dart';
+import 'package:payment_app/pages/cards/transactionItem.dart';
 
 class Cards extends StatefulWidget {
   const Cards({Key? key}) : super(key: key);
@@ -73,16 +73,13 @@ class _CardsState extends State<Cards> {
       ),
     ),
     TransactionItemData(
-      title: "Google Play",
-      amount: 1300,
+      title: "Anong0u0",
+      amount: 100,
       status: STATUS.payment,
-      image: Container(
-        padding: const EdgeInsets.all(16),
-        child: Image.network(
-          "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Logo_Play_512px_clr_nGVTgYY.width-500.format-webp.webp",
-          height: 40,
-          width: 40,
-        ),
+      image: Image.network(
+        "https://cdn.discordapp.com/avatars/304583413502050313/a_69cbd5456c39abaf373c2b40196dfcd9.webp?size=160",
+        height: 40,
+        width: 40,
       ),
     )
   ];

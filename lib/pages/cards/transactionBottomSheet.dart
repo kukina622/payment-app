@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:payment_app/widgets/transaction/transactionItem.dart';
+import 'package:payment_app/pages/cards/transactionItem.dart';
 
 class TransactionBottomSheet extends StatefulWidget {
   final List<TransactionItemData> transactions;
