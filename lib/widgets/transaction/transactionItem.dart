@@ -1,11 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+enum STATUS { payment, received }
+
+class TransactionItemData {
+  String title;
+  int amount;
+  STATUS status;
+  Widget image;
+
+  TransactionItemData({
+    required this.title,
+    required this.amount,
+    this.status = STATUS.payment,
+    this.image = const Icon(
+      Icons.shopify,
+      size: 40,
+      color: Colors.white,
+    ),
+  });
+}
+
 class TransactionItem extends StatelessWidget {
-  const TransactionItem({Key? key}) : super(key: key);
+  final TransactionItemData data;
+  const TransactionItem({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+
+  (Color, String, IconData) getTransactionStatus() {
+    switch (data.status) {
+      case STATUS.payment:
+        return (Colors.green, "Payment", Icons.check);
+      case STATUS.received:
+        return (Colors.blue, "Received", Icons.arrow_downward);
+      default:
+        return (Colors.green, "Payment", Icons.payment);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    var (statusColor, statusText, statusIcon) = getTransactionStatus();
+
     return Container(
       margin: const EdgeInsets.only(top: 18),
       height: 64,
@@ -17,13 +54,12 @@ class TransactionItem extends StatelessWidget {
             height: 64,
             width: 64,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(18),
               color: Colors.black,
             ),
-            child: const Icon(
-              size: 32,
-              Icons.shopify,
-              color: Colors.white,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(18),
+              child: data.image,
             ),
           ),
           Expanded(
@@ -37,25 +73,24 @@ class TransactionItem extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: const Color.fromARGB(255, 46, 151, 93)
-                        .withOpacity(0.15),
+                    color: statusColor.withOpacity(0.15),
                   ),
                   child: RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                       children: [
                         WidgetSpan(
                           child: Icon(
-                            Icons.check,
+                            statusIcon,
                             size: 14,
-                            color: Colors.green,
+                            color: statusColor,
                           ),
                         ),
                         TextSpan(
-                          text: "Payment",
+                          text: statusText,
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
-                            color: Colors.green,
+                            color: statusColor,
                           ),
                         ),
                       ],
@@ -66,10 +101,10 @@ class TransactionItem extends StatelessWidget {
                 Flex(
                   direction: Axis.horizontal,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Text(
-                        "Apple Store",
-                        style: TextStyle(
+                        data.title,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           overflow: TextOverflow.ellipsis,
@@ -80,7 +115,7 @@ class TransactionItem extends StatelessWidget {
                     const SizedBox(width: 15),
                     Text(
                       NumberFormat.simpleCurrency(decimalDigits: 0)
-                          .format(1000)
+                          .format(data.amount)
                           .toString(),
                       style: const TextStyle(
                         fontSize: 16,

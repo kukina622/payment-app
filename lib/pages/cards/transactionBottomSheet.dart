@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:payment_app/widgets/transaction/transactionItem.dart';
 
 class TransactionBottomSheet extends StatefulWidget {
-  const TransactionBottomSheet({Key? key}) : super(key: key);
+  final List<TransactionItemData> transactions;
+  const TransactionBottomSheet({Key? key, this.transactions = const []})
+      : super(key: key);
 
   @override
   State<TransactionBottomSheet> createState() => _TransactionBottomSheetState();
@@ -12,9 +14,9 @@ class _TransactionBottomSheetState extends State<TransactionBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      minChildSize: 0.1,
+      minChildSize: 0.48,
       maxChildSize: 0.9,
-      initialChildSize: 0.4,
+      initialChildSize: 0.48,
       builder: (BuildContext context, ScrollController scrollController) {
         return Container(
           height: MediaQuery.of(context).size.height * 0.9,
@@ -79,10 +81,9 @@ class _TransactionBottomSheetState extends State<TransactionBottomSheet> {
                           ),
                         ],
                       ),
-                      ...List.generate(
-                        50,
-                        (index) => const TransactionItem(),
-                      )
+                      ...widget.transactions
+                          .map((e) => TransactionItem(data: e))
+                          .toList(),
                     ],
                   ),
                 ),
