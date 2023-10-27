@@ -5,7 +5,7 @@ enum CARDTYPE { VISA, MASTERCARD }
 
 class CardData {
   String creditCardNumber;
-  double balance;
+  int balance;
   String expiresDate;
   CARDTYPE cardType = CARDTYPE.VISA;
   Color cardColor;
@@ -24,7 +24,7 @@ class CardData {
 
 class CreditCard extends StatelessWidget {
   final String creditCardNumber;
-  final double balance;
+  final int balance;
   final String expiresDate;
   final CARDTYPE cardType;
   final Color cardColor;
