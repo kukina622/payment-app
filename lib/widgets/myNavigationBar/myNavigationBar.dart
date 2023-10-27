@@ -13,7 +13,7 @@ class MyNavigationBar extends StatelessWidget {
           const SizedBox(width: 8),
           IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.maybePop(context);
             },
             icon: const Icon(Icons.arrow_back_ios),
           ),
