@@ -19,10 +19,27 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       initialRoute: '/',
-      routes: {
-        '/': (context) => const Home(),
-        '/cards': (context) => const Cards(),
-        '/analytics': (context) => const Analytics(),
+      onGenerateRoute: (settings) {
+        if (settings.name == "/cards") {
+          return PageRouteBuilder(
+            settings: settings,
+            pageBuilder: (_, __, ___) => const Cards(),
+            transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
+          );
+        } else if (settings.name == "/analytics") {
+          return PageRouteBuilder(
+            settings: settings,
+            pageBuilder: (_, __, ___) => const Analytics(),
+            transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
+          );
+        } else if (settings.name == "/") {
+          return PageRouteBuilder(
+            settings: settings,
+            pageBuilder: (_, __, ___) => const Home(),
+            transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
+          );
+        }
+        return null;
       },
     );
   }
