@@ -127,9 +127,10 @@ class _CardsState extends State<Cards> {
       const Duration(milliseconds: 50),
     );
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Timer(const Duration(seconds: 2), () {
+      Timer t = Timer(const Duration(seconds: 2), () {
         setState(() => isShowBottomNavigationBar = false);
       });
+      timers.add(t);
     });
     super.initState();
   }
