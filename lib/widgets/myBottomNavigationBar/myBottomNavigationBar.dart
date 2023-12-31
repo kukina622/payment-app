@@ -22,7 +22,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
     "/scanner",
     "/cards",
     "/analytics",
-    "/",
+    "/profile",
   ];
 
   @override
