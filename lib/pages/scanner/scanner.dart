@@ -13,9 +13,9 @@ class Scanner extends StatefulWidget {
 }
 
 class _ScannerState extends State<Scanner> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
   QRViewController? controller;
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   @override
   void reassemble() {
@@ -31,50 +31,49 @@ class _ScannerState extends State<Scanner> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MyAppBar(),
-      body: QRView(
-        key: qrKey,
-        onQRViewCreated: _onQRViewCreated,
-      ),
+      body: Expanded(child: _buildQrView(context)),
       floatingActionButton: const MyBottomNavigationBar(initIndex: 0),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
+  Widget _buildQrView(BuildContext context) {
+    var scanArea =
+        (MediaQuery.of(context).size.width < 400 || MediaQuery.of(context).size.height < 400)
+            ? 150.0
+            : 300.0;
+    return QRView(
+      key: qrKey,
+      onQRViewCreated: _onQRViewCreated,
+      overlay: QrScannerOverlayShape(
+        borderColor: const Color(0xFFd5a4d9),
+        borderRadius: 10,
+        borderLength: 30,
+        borderWidth: 10,
+        cutOutSize: scanArea,
+      ),
+      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+    );
+  }
+
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
+
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-        showScanResult();
-      });
+      controller.pauseCamera();
+      result = scanData;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(result?.code ?? "")),
+      );
     });
   }
 
-  Future<void> showScanResult() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Scan Result'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(result?.code ?? ''),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
+    if (!p) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('no Permission')),
+      );
+    }
   }
 
   @override
