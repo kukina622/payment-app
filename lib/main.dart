@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:payment_app/pages/analytics/analytics.dart';
 import 'package:payment_app/pages/cards/cards.dart';
 import 'package:payment_app/pages/home/home.dart';
+import 'package:payment_app/pages/scanner/scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -37,6 +38,12 @@ class MyApp extends StatelessWidget {
           return PageRouteBuilder(
             settings: settings,
             pageBuilder: (_, __, ___) => const Analytics(),
+            transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
+          );
+        } else if (settings.name == "/scanner") {
+          return PageRouteBuilder(
+            settings: settings,
+            pageBuilder: (_, __, ___) => const Scanner(),
             transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
           );
         } else if (settings.name == "/") {

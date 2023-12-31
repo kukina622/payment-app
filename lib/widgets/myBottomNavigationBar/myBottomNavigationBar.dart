@@ -12,14 +12,14 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   int current = 0;
 
   List<IconData> icon = [
-    Icons.home,
+    Icons.qr_code_scanner,
     Icons.credit_card,
     Icons.signal_cellular_alt,
     Icons.person,
   ];
 
   List<String> pages = [
-    "/",
+    "/scanner",
     "/cards",
     "/analytics",
     "/",
