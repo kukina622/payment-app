@@ -4,7 +4,8 @@ import 'package:payment_app/widgets/creditCard/creditCard.dart';
 
 class CardsCarousel extends StatefulWidget {
   final List<CardData> cardData;
-  const CardsCarousel({Key? key, this.cardData = const []}) : super(key: key);
+  final Function(CardData)? onCardSelected;
+  const CardsCarousel({Key? key, this.cardData = const [], this.onCardSelected}) : super(key: key);
 
   @override
   State<CardsCarousel> createState() => _CardsCarouselState();
@@ -19,14 +20,17 @@ class _CardsCarouselState extends State<CardsCarousel> {
   void initState() {
     cards = widget.cardData
         .map(
-          (e) => CreditCard(
-            creditCardNumber: e.creditCardNumber,
-            expiresDate: e.expiresDate,
-            balance: e.balance,
-            cardType: e.cardType,
-            cardColor: e.cardColor,
-            primaryTextColor: e.primaryTextColor,
-            secondaryTextColor: e.secondaryTextColor,
+          (e) => GestureDetector(
+            onTap: () => widget.onCardSelected?.call(e),
+            child: CreditCard(
+              creditCardNumber: e.creditCardNumber,
+              expiresDate: e.expiresDate,
+              balance: e.balance,
+              cardType: e.cardType,
+              cardColor: e.cardColor,
+              primaryTextColor: e.primaryTextColor,
+              secondaryTextColor: e.secondaryTextColor,
+            ),
           ),
         )
         .toList();
@@ -63,12 +67,10 @@ class _CardsCarouselState extends State<CardsCarousel> {
               child: Container(
                 width: 12.0,
                 height: 12.0,
-                margin:
-                    const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4.0),
+                margin: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.black
-                      .withOpacity(_current == entry.key ? 0.7 : 0.2),
+                  color: Colors.black.withOpacity(_current == entry.key ? 0.7 : 0.2),
                 ),
               ),
             );

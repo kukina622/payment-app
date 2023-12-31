@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:payment_app/pages/cards/cardPayment.dart';
 import 'package:payment_app/pages/cards/cardsCarousel.dart';
 import 'package:payment_app/pages/cards/transactionBottomSheet.dart';
 import 'package:payment_app/widgets/creditCard/creditCard.dart';
@@ -93,6 +94,9 @@ class _CardsState extends State<Cards> {
   late Function noShowBottomNavigationBar;
   List<Timer> timers = [];
 
+  DraggableScrollableController cardPaymentController = DraggableScrollableController();
+  CardData? selectedCardData;
+
   Function debounce(Function fn, Duration duration) {
     Timer? t;
     return () {
@@ -152,7 +156,19 @@ class _CardsState extends State<Cards> {
           const MyNavigationBar(title: "Cards"),
           Padding(
             padding: const EdgeInsets.only(top: 70),
-            child: CardsCarousel(cardData: cardData),
+            child: CardsCarousel(
+              cardData: cardData,
+              onCardSelected: (cardData) {
+                setState(() {
+                  selectedCardData = cardData;
+                  cardPaymentController.animateTo(
+                    1,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                });
+              },
+            ),
           ),
           TransactionBottomSheet(
             transactions: transactions,
@@ -165,6 +181,10 @@ class _CardsState extends State<Cards> {
                 showBottomNavigationBar();
               }
             },
+          ),
+          CardPayment(
+            cardData: selectedCardData,
+            controller: cardPaymentController,
           ),
         ],
       ),
