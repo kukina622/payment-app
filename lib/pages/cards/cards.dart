@@ -160,6 +160,7 @@ class _CardsState extends State<Cards> {
               cardData: cardData,
               onCardSelected: (cardData) {
                 setState(() {
+                  isShowBottomNavigationBar = false;
                   selectedCardData = cardData;
                   cardPaymentController.animateTo(
                     1,
