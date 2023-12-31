@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:payment_app/pages/analytics/analytics.dart';
 import 'package:payment_app/pages/cards/cards.dart';
 import 'package:payment_app/pages/home/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final bool isFirst = prefs.getBool('isFirst') ?? true;
+  String initialRoute = isFirst ? "/" : "/cards";
+  runApp(MyApp(initialRoute: initialRoute));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String initialRoute;
+  const MyApp({super.key, this.initialRoute = "/"});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.transparent),
         useMaterial3: true,
       ),
-      initialRoute: '/',
+      initialRoute: initialRoute,
       onGenerateRoute: (settings) {
         if (settings.name == "/cards") {
           return PageRouteBuilder(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -71,7 +72,14 @@ class Home extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () => Navigator.pushReplacementNamed(context, '/cards'),
+              onPressed: () async {
+                final SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.setBool('isFirst', false);
+
+                if (context.mounted) {
+                  Navigator.pushReplacementNamed(context, '/cards');
+                }
+              },
               child: const Text(
                 "Get started",
                 style: TextStyle(fontSize: 20, color: Colors.white),
