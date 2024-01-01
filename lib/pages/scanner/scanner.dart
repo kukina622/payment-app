@@ -16,6 +16,7 @@ class _ScannerState extends State<Scanner> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  bool _isSnackbarActive = false;
 
   @override
   void reassemble() {
@@ -31,7 +32,7 @@ class _ScannerState extends State<Scanner> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MyAppBar(),
-      body: Expanded(child: _buildQrView(context)),
+      body: _buildQrView(context),
       floatingActionButton: const MyBottomNavigationBar(initIndex: 0),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
@@ -60,11 +61,19 @@ class _ScannerState extends State<Scanner> {
     this.controller = controller;
 
     controller.scannedDataStream.listen((scanData) {
-      controller.pauseCamera();
+      if (_isSnackbarActive) return;
+      _isSnackbarActive = true;
       result = scanData;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(result?.code ?? "")),
-      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(
+            SnackBar(
+              content: Text(result?.code ?? ""),
+            ),
+          )
+          .closed
+          .then((reason) {
+        _isSnackbarActive = false;
+      });
     });
   }
 
